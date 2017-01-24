@@ -12,16 +12,16 @@ namespace apis
 {
     public class RecettesControllerTest
     {
-        private Mock<apis.Models.IRepository<apis.Models.Recette>> _repositoryMock;
-        private Mock<apis.Models.IRepository<apis.Models.Ingredient>> _repositoryIngredientMock;
+        private Mock<apis.Data.IRepository<apis.Models.Recette>> _repositoryMock;
+        private Mock<apis.Data.IRepository<apis.Models.Ingredient>> _repositoryIngredientMock;
         private Mock<IHostingEnvironment> _hostingEnvironment;
 
         private apis.Controllers.RecettesController _recettesController;
         
         public RecettesControllerTest()
         {
-            _repositoryMock = new Mock<apis.Models.IRepository<apis.Models.Recette>>();
-            _repositoryIngredientMock = new Mock<apis.Models.IRepository<apis.Models.Ingredient>>();
+            _repositoryMock = new Mock<apis.Data.IRepository<apis.Models.Recette>>();
+            _repositoryIngredientMock = new Mock<apis.Data.IRepository<apis.Models.Ingredient>>();
             _hostingEnvironment = new Mock<IHostingEnvironment>();
 
             List<Models.Recette> recettes = new List<Models.Recette>();

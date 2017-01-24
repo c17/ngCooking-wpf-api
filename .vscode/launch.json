@@ -33,6 +33,16 @@
             }
         },
         {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceRoot}/src/apis.test/bin/Debug/netcoreapp1.0/apis.test.dll",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": false
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
