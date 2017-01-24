@@ -6,5 +6,6 @@ GETTING STARTED
 
 - go to src/apis
 - dotnet run
+- http://localhost:5000/api/import pour insérer les données en BDD depuis les fichiers JSON
 
 .NET VERSION: .NET Core 1.1
