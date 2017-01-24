@@ -51,6 +51,7 @@ namespace apis
                 sa.Password.RequireDigit = false;
                 sa.Password.RequireUppercase = false;
                 sa.Password.RequiredLength = 0;
+                sa.Password.RequireNonAlphanumeric = false;
                 sa.Cookies.ApplicationCookie.LoginPath = "/App/Login";
                 sa.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
