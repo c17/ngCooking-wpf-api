@@ -26,5 +26,13 @@ namespace apis
 
             Assert.NotEmpty(recettes);
         }
+
+        [Fact]
+        public async void IngredientsGet()
+        {
+            List<apis.Client.Models.Ingredient> ingredients = await _apiClient.Get<List<apis.Client.Models.Ingredient>>("ingredients");
+
+            Assert.NotEmpty(ingredients);
+        }
     }
 }
