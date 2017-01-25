@@ -34,5 +34,21 @@ namespace apis
 
             Assert.NotEmpty(ingredients);
         }
+
+
+        [Fact]
+        public async void CommentairePost()
+        {
+            Models.Commentaire newComment = new Models.Commentaire 
+            {
+                UserId = 1,
+                RecetteId = "cake-jambon-olive",
+                Title = "Un commentaire de test",
+                Comment = "Le contenu du commentaire",
+                Mark = 5
+            };
+
+            await _apiClient.Post<Models.Commentaire>("commentaires", newComment);
+        }
     }
 }

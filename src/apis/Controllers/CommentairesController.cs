@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace apis.Controllers
 {
     [Route("api/[controller]")]
-    public class CommentairesController
+    public class CommentairesController : Controller
     {
         IRepository<Commentaire> _commentairesRepository;
 
@@ -19,7 +19,7 @@ namespace apis.Controllers
         }
 
         [HttpPost]
-        public void Post(Commentaire comment)
+        public void Post([FromBody]Commentaire comment)
         {
             _commentairesRepository.Add(comment);
         }

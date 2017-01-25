@@ -3,3 +3,7 @@ src/apis/bin
 src/apis/obj
 **/node_modules
 **/*.user
+**/bin
+**/obj
+**/bin/**/*.*
+**/obj/**/*.*
