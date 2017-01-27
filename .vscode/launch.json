@@ -8,7 +8,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceRoot}/src/apis/bin/Debug/netcoreapp1.0/apis.dll",
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/src/apis",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
@@ -37,9 +37,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/apis.test/bin/Debug/netcoreapp1.0/apis.test.dll",
+            "program": "${workspaceRoot}/src/apis.test/bin/Debug/netcoreapp1.1/apis.test.dll",
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/src/apis.test/bin/Debug/netcoreapp1.1",
             "stopAtEntry": false
         },
         {

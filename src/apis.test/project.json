@@ -27,7 +27,10 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "copyToOutput": {
+      "include": [ "gateau.jpg", "emptyfile.test" ]
+    }
   }
 
 }

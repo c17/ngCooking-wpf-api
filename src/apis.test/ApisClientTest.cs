@@ -50,5 +50,32 @@ namespace apis
 
             await _apiClient.Post<Models.Commentaire>("commentaires", newComment);
         }
+
+        [Fact]
+        public async void RecettePostNoImage()
+        {
+            Models.Recette newRecipe = new Models.Recette 
+            {
+                Name = "Délicieuse recette de choucroute",
+                Ingredients = new List<String> { "Farine", "Banane" },
+                Preparation = "Faire macérer le chou dans la bière",
+                CreatorId = 1,
+                Calories = 300
+            };
+
+            await _apiClient.Post<Models.Recette>("recettes", newRecipe);
+        }
+
+        [Fact]
+        public async void RecetteSetImage()
+        {
+            byte[] fileData = System.IO.File.ReadAllBytes("gateau.jpg");
+
+            await _apiClient.PostImage(
+                "recettes/setimage",
+                new Dictionary<String, String>() { { "id", "cake-jambon-olive" } },
+                fileData,
+                "rawPicture");
+        }
     }
 }

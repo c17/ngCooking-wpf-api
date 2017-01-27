@@ -50,18 +50,12 @@ namespace apis.Controllers
         }
 
         [HttpPost]
-        public void Post(Recette recipe)
+        public Recette Post(Recette recipe)
         {
             recipe.Id = recipe.Name.Replace(" ", "-").ToLower();
 
             if (_recettesRepository.Get().Any(r => r.Id == recipe.Id))
                 recipe.Id = String.Format("{0}-{1}", recipe.Id, Guid.NewGuid());
-
-            
-            byte[] imageBinary = new byte[Request.Form.Files["rawPicture"].Length];
-
-            using (System.IO.Stream fileStream = Request.Form.Files["rawPicture"].OpenReadStream())
-                fileStream.Read(imageBinary, 0, imageBinary.Length);
 
             recipe.IsAvailable = true;
             //Un nom est généré aléatoirement afin de ne pas avoir à se soucier des collisions avec d'autres images sur le file system
@@ -84,6 +78,41 @@ namespace apis.Controllers
                 if (ig != null)
                     recipe.IngredientsRecettes.Add(new IngredientRecette { IngredientId = ig.Id, RecetteId = recipe.Id });
             }
+
+            #region Image facultative
+
+            if (Request.Form.Files["rawPicture"] != null)
+            {
+                byte[] imageBinary = new byte[Request.Form.Files["rawPicture"].Length];
+
+                using (System.IO.Stream fileStream = Request.Form.Files["rawPicture"].OpenReadStream())
+                    fileStream.Read(imageBinary, 0, imageBinary.Length);
+
+                String pictureFullPath = String.Format("{0}/{1}", _appEnvironment.WebRootPath, recipe.Picture);
+
+                using (System.IO.FileStream fs = new System.IO.FileStream(pictureFullPath, System.IO.FileMode.Create))
+                    fs.Write(imageBinary, 0, imageBinary.Length);
+            }
+            
+            #endregion
+            
+            return recipe;
+        }
+
+        [HttpPost]
+        [Route("setimage")]
+        public void SetImage([FromBody] String id)
+        {
+            if (Request.Form.Files.Count == 0 || Request.Form.Files["rawPicture"] == null)
+                return;
+
+            var recipe = _recettesRepository.Get().Where(r => r.Id == id)
+                    .FirstOrDefault();
+
+            byte[] imageBinary = new byte[Request.Form.Files["rawPicture"].Length];
+
+            using (System.IO.Stream fileStream = Request.Form.Files["rawPicture"].OpenReadStream())
+                fileStream.Read(imageBinary, 0, imageBinary.Length);
 
             String pictureFullPath = String.Format("{0}/{1}", _appEnvironment.WebRootPath, recipe.Picture);
 
