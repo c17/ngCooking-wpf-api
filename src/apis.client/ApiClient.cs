@@ -88,7 +88,7 @@ namespace apis.Client
 
             CookieContainer cookieContainer = new CookieContainer();
             HttpClientHandler clientHandler = new HttpClientHandler();
-            var handler = new LoggingHandler(clientHandler);
+            //var handler = new LoggingHandler(clientHandler);
             clientHandler.CookieContainer = cookieContainer;
             var baseAddress = new Uri(_baseUrl);
 
@@ -96,7 +96,7 @@ namespace apis.Client
                 foreach (KeyValuePair<String, String> cookie in cookies)
                     cookieContainer.Add(baseAddress, new Cookie(cookie.Key, cookie.Value));
 
-            using (HttpClient client = new HttpClient(handler))
+            using (HttpClient client = new HttpClient(clientHandler))
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
                 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));

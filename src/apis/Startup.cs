@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using apis.Models;
 using apis.Data;
+using Newtonsoft.Json.Serialization;
 
 namespace apis
 {
@@ -31,7 +32,11 @@ namespace apis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddControllersAsServices();
+            services.AddMvc().AddControllersAsServices().AddJsonOptions(opts =>
+            {
+                // Force Camel Case to JSON
+                opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddTransient<IUserStore<Models.User>, UserStore<Models.User, IdentityRole<Int32>, NgContext, Int32>>();
 
@@ -65,7 +70,7 @@ namespace apis
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMiddleware<LoggingMiddleware>();
+            //app.UseMiddleware<LoggingMiddleware>();
 
             app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().Build());
 

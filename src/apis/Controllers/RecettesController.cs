@@ -50,7 +50,7 @@ namespace apis.Controllers
         }
 
         [HttpPost]
-        public Recette Post(Recette recipe)
+        public Recette Post([FromBody]Recette recipe)
         {
             recipe.Id = recipe.Name.Replace(" ", "-").ToLower();
 
@@ -81,21 +81,24 @@ namespace apis.Controllers
 
             #region Image facultative
 
-            if (Request.Form.Files["rawPicture"] != null)
+            if (Request.HasFormContentType)
             {
-                byte[] imageBinary = new byte[Request.Form.Files["rawPicture"].Length];
+                if (Request.Form.Files["rawPicture"] != null)
+                {
+                    byte[] imageBinary = new byte[Request.Form.Files["rawPicture"].Length];
 
-                using (System.IO.Stream fileStream = Request.Form.Files["rawPicture"].OpenReadStream())
-                    fileStream.Read(imageBinary, 0, imageBinary.Length);
+                    using (System.IO.Stream fileStream = Request.Form.Files["rawPicture"].OpenReadStream())
+                        fileStream.Read(imageBinary, 0, imageBinary.Length);
 
-                String pictureFullPath = String.Format("{0}/{1}", _appEnvironment.WebRootPath, recipe.Picture);
+                    String pictureFullPath = String.Format("{0}/{1}", _appEnvironment.WebRootPath, recipe.Picture);
 
-                using (System.IO.FileStream fs = new System.IO.FileStream(pictureFullPath, System.IO.FileMode.Create))
-                    fs.Write(imageBinary, 0, imageBinary.Length);
+                    using (System.IO.FileStream fs = new System.IO.FileStream(pictureFullPath, System.IO.FileMode.Create))
+                        fs.Write(imageBinary, 0, imageBinary.Length);
+                }
             }
-            
+
             #endregion
-            
+
             return recipe;
         }
 
