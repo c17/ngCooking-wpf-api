@@ -9,9 +9,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
 using System.Linq;
-#if NET46
 using RestSharp;
-#endif
 
 namespace apis.Client
 {
@@ -133,8 +131,6 @@ namespace apis.Client
                 }
             }
         }
-
-#if NET46
         public async Task<Boolean> PostImage2(
             String relativeUrl,
             Dictionary<String, String> parameters,
@@ -202,8 +198,6 @@ namespace apis.Client
 
             return response.StatusCode == HttpStatusCode.OK;
         }
-
-#endif
 
 
     }
