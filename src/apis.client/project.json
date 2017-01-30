@@ -10,7 +10,7 @@
   "frameworks": {
     "net46": {
       "dependencies": {
-        
+        "RestSharp": "105.2.3"
       }
     },
     "netstandard1.3": {

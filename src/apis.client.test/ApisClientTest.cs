@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Moq;
+﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace apis
@@ -39,7 +34,7 @@ namespace apis
         [Fact]
         public async void CommentairePost()
         {
-            Models.Commentaire newComment = new Models.Commentaire 
+            apis.Client.Models.Commentaire newComment = new apis.Client.Models.Commentaire 
             {
                 UserId = 1,
                 RecetteId = "cake-jambon-olive",
@@ -48,13 +43,13 @@ namespace apis
                 Mark = 5
             };
 
-            await _apiClient.Post<Models.Commentaire>("commentaires", newComment);
+            await _apiClient.Post<apis.Client.Models.Commentaire>("commentaires", newComment);
         }
 
         [Fact]
         public async void RecettePostNoImage()
         {
-            Models.Recette newRecipe = new Models.Recette 
+            apis.Client.Models.Recette newRecipe = new apis.Client.Models.Recette 
             {
                 Name = "Délicieuse recette de choucroute",
                 Ingredients = new List<String> { "Farine", "Banane" },
@@ -63,7 +58,7 @@ namespace apis
                 Calories = 300
             };
 
-            await _apiClient.Post<Models.Recette>("recettes", newRecipe);
+            await _apiClient.Post<apis.Client.Models.Recette>("recettes", newRecipe);
         }
 
         [Fact]
@@ -71,11 +66,13 @@ namespace apis
         {
             byte[] fileData = System.IO.File.ReadAllBytes("gateau.jpg");
 
-            await _apiClient.PostImage(
+            bool result = await _apiClient.PostImage3(
                 "recettes/setimage",
                 new Dictionary<String, String>() { { "id", "cake-jambon-olive" } },
                 fileData,
                 "rawPicture");
+
+            Assert.True(result);
         }
     }
 }

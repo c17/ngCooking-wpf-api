@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using apis.Models;
 using apis.Data;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace apis
 {
@@ -36,6 +37,12 @@ namespace apis
             {
                 // Force Camel Case to JSON
                 opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
             });
 
             services.AddTransient<IUserStore<Models.User>, UserStore<Models.User, IdentityRole<Int32>, NgContext, Int32>>();
@@ -69,6 +76,7 @@ namespace apis
         {   
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddConsole();
 
             //app.UseMiddleware<LoggingMiddleware>();
 
