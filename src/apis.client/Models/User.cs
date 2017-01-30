@@ -5,6 +5,9 @@ namespace apis.Client.Models
 {
     public class User
     {
+        [JsonProperty("id")]
+        public Int32 Id { get; set; }
+
         [JsonProperty("firstname")]
         public String FirstName { get; set; }
 
