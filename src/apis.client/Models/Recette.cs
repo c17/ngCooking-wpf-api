@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace apis.Client.Models
 {
@@ -56,5 +57,6 @@ namespace apis.Client.Models
 
         [JsonProperty("calories")]
         public Int32 Calories { get; set; }
+        public BitmapImage Img { get; set; }
     }
 }
