@@ -44,9 +44,9 @@ namespace apis.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Authenticate(String email, String password)
+        public async Task<IActionResult> Authenticate([FromBody]LogginUser user)
         {
-            var result = await _signInManager.PasswordSignInAsync(email, password, true, false);
+            var result = await _signInManager.PasswordSignInAsync(user.email, user.password, true, false);
 
             if (result == Microsoft.AspNetCore.Identity.SignInResult.Success)
                 return new StatusCodeResult(200);

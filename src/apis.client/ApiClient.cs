@@ -61,14 +61,13 @@ namespace apis.Client
             using (HttpClient client = new HttpClient(handler))
             {
                 String json = JsonConvert.SerializeObject(data);
-
                 client.DefaultRequestHeaders
                     .Accept
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var jsonContent = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
 
-                using (HttpResponseMessage response = await client.PostAsync(url, jsonContent))
+                using (HttpResponseMessage response = client.PostAsync(url, jsonContent).Result)
                 {
                     return response;
                 }
