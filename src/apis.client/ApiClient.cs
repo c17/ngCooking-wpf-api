@@ -1,15 +1,12 @@
-using System;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Net.Http.Headers;
-using System.Net;
-using System.Text;
-using System.Collections.Generic;
-using System.Collections;
-using System.Reflection;
-using System.Linq;
 using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace apis.Client
 {
@@ -31,7 +28,7 @@ namespace apis.Client
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                using (HttpResponseMessage response = await client.GetAsync(url))
+                using (HttpResponseMessage response = client.GetAsync(url).Result)
                 using (HttpContent content = response.Content)
                 {
                     // ... Read the string.
