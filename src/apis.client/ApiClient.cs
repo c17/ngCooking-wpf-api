@@ -19,15 +19,20 @@ namespace apis.Client
             _baseUrl = baseUrl;
         }
 
-        public async Task<T> Get<T>(String relativeUrl) where T : class
+        public async Task<T> Get<T>(String relativeUrl, Dictionary<String, String> cookies = null) where T : class
         {
             String url = String.Format("{0}/{1}", _baseUrl, relativeUrl);
-
-            using (HttpClient client = new HttpClient())
+            CookieContainer cookieContainer = new CookieContainer();
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.CookieContainer = cookieContainer;
+            var baseAddress = new Uri(_baseUrl);
+            if (cookies != null)
+                foreach (KeyValuePair<String, String> cookie in cookies)
+                    cookieContainer.Add(baseAddress, new Cookie(cookie.Key, cookie.Value));
+            using (HttpClient client = new HttpClient(handler))
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 using (HttpResponseMessage response = client.GetAsync(url).Result)
                 using (HttpContent content = response.Content)
                 {
